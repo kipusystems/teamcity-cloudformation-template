@@ -101,7 +101,7 @@ Parameters:
     AgentInstanceType:
         Description: The instance type for the EC2 instance running container with TeamCity Build Agent
         Type: String
-        Default: t2.medium
+        Default: m5.xlarge
         AllowedValues:
           - t2.small
           - t2.medium
@@ -140,17 +140,17 @@ Parameters:
 
     AgentNumber:
       Type: Number
-      Default: 1
+      Default: 3
       Description: Number of build agents to start. Set '0' to start TeamCity server without build agents connected.
 
     AgentContainerCpu:
       Type: Number
-      Default: 1024
+      Default: 4096
       Description: How much CPU to give the container running TeamCity build agent. 1024 is 1 CPU
 
     AgentContainerMemory:
       Type: Number
-      Default: 2048
+      Default: 12288
       Description: How much memory in megabytes to give the container running TeamCity build agent
 
     CertificateDomainName:
@@ -713,7 +713,7 @@ Resources:
             Expression: attribute:teamcity.node-responsibility == buildAgent
         ContainerDefinitions:
           - Name: 'teamcity-agent'
-            Image: !Join [':', ['jetbrains/teamcity-agent', !Ref 'TeamCityVersion']]
+            Image: '633233947399.dkr.ecr.us-east-1.amazonaws.com/kipu-team-city-agent:v1.0'
             Cpu: !Ref AgentContainerCpu
             Memory: !Ref AgentContainerMemory
             Essential: true
